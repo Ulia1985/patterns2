@@ -22,7 +22,7 @@ public class AuthTest {
         @Test
         @DisplayName("Should successfully login with active registered user")
         void shouldSuccessfulLoginIfRegisteredActiveUser() {
-        var registeredUser = DataGenerator.getRegisteredUser("active");
+        var registeredUser = DataGenerator.Registration.getRegisteredUser("active");
             $("[data-test-id='Login'] input").setValue(registeredUser.getLogin());
             $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
             $("button.button").click();
@@ -37,8 +37,8 @@ public class AuthTest {
             $("[data-test-id='password'] input").setValue(notRegisteredUser.getPassword());
             $("button.button").click();
             $("[data-test-id='error-notification'] .notification__content")
-                    .shouldHave(text("Ошибка! Неверно указан логин или пароль")
-                    .shouldBe((visible));
+                    .shouldHave(text("Ошибка! Неверно указан логин или пароль"))
+                    .shouldBe(visible);
         }
 
     @Test
