@@ -12,6 +12,9 @@ import java.util.Locale;
 
 import static io.restassured.RestAssured.given;
 public class DataGenerator {
+    private DataGenerator () {
+
+    }
          private static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
             .setPort(9999)
@@ -21,10 +24,8 @@ public class DataGenerator {
             .build();
     private static final Faker faker = new Faker(new Locale("en"));
 
-    private DataGenerator() {
-    }
+    private static void sendRequest (RegistrationDto user) {
 
-    private static RegistrationDto sendRequest(RegistrationDto user) {
         given()
                 .spec(requestSpec)
                 .body(user)
@@ -32,14 +33,17 @@ public class DataGenerator {
                 .post("/api/system/users")
                 .then()
                 .statusCode(200);
-        return user;
+
     }
 
     public static String getRandomLogin() {
+        String login = faker.name
         return faker.name().username();
+        return login;
     }
     public static String getRandomPassword() {
-        return faker.internet(). password ();
+        String password = faker.inernet().password();
+        return password;
     }
 
     public static class Registration {
@@ -47,11 +51,16 @@ public class DataGenerator {
         }
 
         public static RegistrationDto getUser(String status) {
-                   return new RegistrationDto(getRandomLogin(), getRandomPassword(), status);
+            var user = new RegistrationDto(getRandomLogin(), getRandomPassword(), status);
+                   return user;
         }
-        public static RegistrationDto getRegisteredUser(String status) { return sendRequest(getUser(status)); }
+        public static RegistrationDto getRegisteredUser(String status) {
+            var registeredUser = getUser(status);
+        sendRequest(registeredUser);
+        return registeredUser;
+        }
 
-        }
+    }
 
     @Value
     public static class RegistrationDto {
