@@ -20,7 +20,7 @@ import static com.codeborne.selenide.Selenide.open;
 import static ru.netology.testmode.data.DataGenerator.getRandomLogin;
 import static ru.netology.testmode.data.DataGenerator.getRandomPassword;
 
-public class AuthTest {
+class AuthTest {
 
         @BeforeEach
         void setup() {
